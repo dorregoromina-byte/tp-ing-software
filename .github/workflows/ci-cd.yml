@@ -1,0 +1,26 @@
+name: Pipeline de IC UTN
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  integracion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Descargar codigo del repositorio
+        uses: actions/checkout@v4
+
+      - name: 2. Configurar el entorno Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 3. Instalar dependencias limpias
+        run: npm ci
+
+      - name: 4. Ejecutar la Build del proyecto
+        run: npm run build
+
+      - name: 5. Ejecutar Pruebas Automatizadas
+        run: npm test
